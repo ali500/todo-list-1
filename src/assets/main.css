@@ -12,6 +12,10 @@
   html {
     font-family: 'Vazirmatn', sans-serif;
   }
+
+  body {
+    @apply bg-neutral-100;
+  }
 }
 @tailwind components;
 @tailwind utilities;

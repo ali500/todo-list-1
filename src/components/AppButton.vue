@@ -17,9 +17,9 @@ const shapeClass = ref<string>('')
 if (props.color == AppColor.Indego) {
   colorClass.value =
     'bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-900 px-4 py-2 rounded text-white'
-} else if (props.color == AppColor.Green) {
+} else if (props.color == AppColor.Rose) {
   colorClass.value =
-    'bg-green-700 hover:bg-green-800 active:bg-green-900 px-4 py-2 rounded text-white'
+    'bg-rose-700 hover:bg-rose-800 active:bg-rose-900 px-4 py-2 rounded text-white'
 }
 
 if (props.shape == 'rectangle') {

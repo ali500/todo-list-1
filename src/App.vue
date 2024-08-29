@@ -5,7 +5,13 @@ import { AppColor } from './type'
 
 <template>
   <main>
-    <h1 class="text-3xl font-bold underline">این یک متن آزمایشی است</h1>
-    <AppButton :color="AppColor.Indego" shape="circle">+</AppButton>
+    <div>
+      <AppButton :color="AppColor.Rose" shape="circle">+</AppButton>
+      <AppButton :color="AppColor.Indego" shape="circle">+</AppButton>
+      <AppButton :color="AppColor.Rose" shape="rectangle">کلید کنید</AppButton>
+      <AppButton :color="AppColor.Indego" shape="rectangle"
+        >کلید کنید</AppButton
+      >
+    </div>
   </main>
 </template>
