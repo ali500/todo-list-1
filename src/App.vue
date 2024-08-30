@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import AppButton from './components/AppButton.vue'
-import AppInput from './components/AppInput.vue'
 import AppTodo from './components/AppTodo.vue'
-import { AppColor } from './type'
 </script>
 
 <template>
