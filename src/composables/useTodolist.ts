@@ -8,12 +8,13 @@ interface Todolist {
 const todolists = ref<Todolist[]>([
   { id: 0, text: 'تماس گرفتن' },
   { id: 1, text: 'پیامک دادن' },
+  { id: 2, text: 'درس دادن' },
 ])
 
 export const useTodolist = () => {
   // افزودن به فهرست وظایف
   const addTodo = (todo: string): void => {
-    todolists.value.push({ id: todolists.value.length - 1, text: todo })
+    todolists.value.push({ id: todolists.value.length, text: todo })
   }
 
   // ویرایش فهرست وظایف
