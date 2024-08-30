@@ -27,10 +27,21 @@ export const useTodolist = () => {
 
   // حذف از فهرست وظایف
   const removeTodo = (todoId: number): void => {
-    const index: number = todolists.value.findIndex(
-      (todo: Todolist) => todo.id === todoId
-    )
-    todolists.value.splice(index, 1)
+    const result: boolean = confirm('آیا می‌خواهید این آیتم را پاک کنید؟')
+
+    if (result) {
+      const index: number = todolists.value.findIndex(
+        (todo: Todolist) => todo.id === todoId
+      )
+
+      todolists.value.splice(index, 1)
+
+      const newTodolists = todolists.value.map((todo, index) => {
+        return { ...todo, id: index }
+      })
+
+      todolists.value = newTodolists
+    }
   }
 
   return { todolists, addTodo, editTodo, removeTodo }

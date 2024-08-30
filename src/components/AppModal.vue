@@ -11,8 +11,18 @@ import {
 } from '@headlessui/vue'
 
 const task = defineModel()
-defineProps<{ isOpen: boolean }>()
-const emit = defineEmits<{ (e: 'on-add'): void; (e: 'close-modal'): void }>()
+
+const props = defineProps<{
+  editTaskId: number
+  isEditable: boolean
+  isOpen: boolean
+}>()
+
+const emit = defineEmits<{
+  (e: 'on-add'): void
+  (e: 'on-edit', todoId: number, text: string): void
+  (e: 'close-modal'): void
+}>()
 
 const closeModal = (): void => {
   emit('close-modal')
@@ -20,6 +30,10 @@ const closeModal = (): void => {
 
 const addTask = (): void => {
   emit('on-add')
+}
+
+const editTask = (): void => {
+  emit('on-edit', props.editTaskId, task.value as string)
 }
 </script>
 
@@ -58,20 +72,33 @@ const addTask = (): void => {
                 as="h3"
                 class="text-lg font-v-light leading-6 text-gray-900"
               >
-                افزودن یک وظیفه
+                افزودن یک برنامه
               </DialogTitle>
               <div class="mt-2">
                 <AppInput
+                  v-if="isEditable === false"
                   v-model="task"
                   @keydown.enter="addTask"
                   class="w-full ring-1 ring-zinc-200"
                   placeholder="برنامه جدید ..."
                 />
+                <AppInput
+                  v-else-if="isEditable === true"
+                  v-model="task"
+                  @keydown.enter="editTask"
+                  class="w-full ring-1 ring-zinc-200"
+                  placeholder="ویرایش برنامه ..."
+                />
               </div>
 
               <div class="mt-4 space-x-4 space-x-reverse">
                 <AppButton @click="closeModal"><slot name="close" /></AppButton>
-                <AppButton @click="addTask"><slot name="add" /></AppButton>
+                <AppButton v-if="isEditable === false" @click="addTask">
+                  <slot name="action" />
+                </AppButton>
+                <AppButton v-else-if="isEditable === true" @click="editTask">
+                  <slot name="action" />
+                </AppButton>
               </div>
             </DialogPanel>
           </TransitionChild>
