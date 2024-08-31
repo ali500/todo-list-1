@@ -59,14 +59,14 @@ function editTask(todoId: number, text: string): void {
             class="space-x-1 space-x-reverse invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all"
           >
             <AppButton
-              @click="openModal(true, todo.id)"
+              @click.stop="openModal(true, todo.id)"
               shape="circle"
               :color="AppColor.Indego"
             >
               <IconPencil />
             </AppButton>
             <AppButton
-              @click="removeTodo(todo.id)"
+              @click.stop="removeTodo(todo.id)"
               shape="circle"
               :color="AppColor.Rose"
             >
