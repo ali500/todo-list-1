@@ -19,6 +19,7 @@ const {
   unCompletedTodo,
   CompletedTodo,
   todoOption,
+  todoSearch,
 } = useTodolist()
 const isEditable = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
@@ -30,6 +31,10 @@ const list = ref(todolists.value)
 
 watch(todolists, () => {
   list.value = todolists.value
+})
+
+watch(filter, () => {
+  list.value = todoSearch(filter.value)
 })
 
 watch(todoOption, () => {

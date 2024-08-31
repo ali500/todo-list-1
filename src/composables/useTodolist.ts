@@ -67,6 +67,31 @@ export const useTodolist = () => {
     todoOption.value = option
   }
 
+  const todoSearch = (input: string): Todolist[] => {
+    let todos: Todolist[] = [{ id: -1, isComplete: false, text: '' }]
+
+    switch (todoOption.value) {
+      case TodoOption.All:
+        todos = todolists.value.filter((todo) => todo.text.includes(input))
+        break
+
+      case TodoOption.UnCompleted:
+        todos = unCompletedTodo.value.filter((todo) =>
+          todo.text.includes(input)
+        )
+        break
+
+      case TodoOption.Completed:
+        todos = CompletedTodo.value.filter((todo) => todo.text.includes(input))
+        break
+
+      default:
+        break
+    }
+
+    return todos
+  }
+
   return {
     todolists,
     addTodo,
@@ -77,5 +102,6 @@ export const useTodolist = () => {
     CompletedTodo,
     todoOption,
     setTodoOption,
+    todoSearch,
   }
 }
