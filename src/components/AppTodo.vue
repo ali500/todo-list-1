@@ -9,7 +9,8 @@ import AppModal from './AppModal.vue'
 import IconPencil from './icons/IconPencil.vue'
 import IconTrash from './icons/IconTrash.vue'
 
-const { todolists, addTodo, removeTodo, editTodo } = useTodolist()
+const { todolists, addTodo, removeTodo, editTodo, toggleTodoComplete } =
+  useTodolist()
 const isEditable = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
 const task = ref<string>('')
@@ -42,9 +43,13 @@ function editTask(todoId: number, text: string): void {
     <div class="mt-5 rounded bg-white text-zinc-800 shadow">
       <template v-for="todo in todolists" :key="`todo-${todo.id}`">
         <div
+          @click="toggleTodoComplete(todo.id)"
           class="py-5 px-5 hover:cursor-pointer hover:bg-zinc-50 transition flex first:border-t-0 border-t border-zinc-200 justify-between items-center group"
         >
-          <p class="text-zinc-700">
+          <p
+            class="text-zinc-700"
+            :class="todo.isComplete ? 'line-through' : ''"
+          >
             {{
               Intl.NumberFormat('fa-IR', { useGrouping: false }).format(todo.id)
             }}
