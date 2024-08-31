@@ -33,7 +33,6 @@ watch(todolists, () => {
 })
 
 watch(todoOption, () => {
-  console.log('before switch', todolists.value)
   switch (todoOption.value) {
     case TodoOption.All:
       list.value = todolists.value
@@ -50,7 +49,6 @@ watch(todoOption, () => {
     default:
       break
   }
-  console.log('after switch', todolists.value)
 })
 
 function closeModal(): void {
