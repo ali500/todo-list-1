@@ -1,21 +1,57 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AppTodoInput from './AppTodoInput.vue'
 import { useTodolist } from '@/composables/useTodolist'
+// import type { Todolist } from '@/type'
 import AppButton from './AppButton.vue'
 
-import { AppColor } from '@/type'
+import { AppColor, TodoOption } from '@/type'
 import AppModal from './AppModal.vue'
 import IconPencil from './icons/IconPencil.vue'
 import IconTrash from './icons/IconTrash.vue'
 
-const { todolists, addTodo, removeTodo, editTodo, toggleTodoComplete } =
-  useTodolist()
+const {
+  todolists,
+  addTodo,
+  removeTodo,
+  editTodo,
+  toggleTodoComplete,
+  unCompletedTodo,
+  CompletedTodo,
+  todoOption,
+} = useTodolist()
 const isEditable = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
 const task = ref<string>('')
 const filter = ref<string>('')
 const editTaskId = ref<number>(-1)
+
+const list = ref(todolists.value)
+
+watch(todolists, () => {
+  list.value = todolists.value
+})
+
+watch(todoOption, () => {
+  console.log('before switch', todolists.value)
+  switch (todoOption.value) {
+    case TodoOption.All:
+      list.value = todolists.value
+      break
+
+    case TodoOption.UnCompleted:
+      list.value = unCompletedTodo.value
+      break
+
+    case TodoOption.Completed:
+      list.value = CompletedTodo.value
+      break
+
+    default:
+      break
+  }
+  console.log('after switch', todolists.value)
+})
 
 function closeModal(): void {
   isOpen.value = false
@@ -41,7 +77,7 @@ function editTask(todoId: number, text: string): void {
   <div class="mx-auto relative">
     <AppTodoInput v-model="filter" />
     <div class="mt-5 rounded bg-white text-zinc-800 shadow">
-      <template v-for="todo in todolists" :key="`todo-${todo.id}`">
+      <template v-for="todo in list" :key="`todo-${todo.id}`">
         <div
           @click="toggleTodoComplete(todo.id)"
           class="py-5 px-5 hover:cursor-pointer hover:bg-zinc-50 transition flex first:border-t-0 border-t border-zinc-200 justify-between items-center group"
@@ -61,7 +97,7 @@ function editTask(todoId: number, text: string): void {
             <AppButton
               @click.stop="openModal(true, todo.id)"
               shape="circle"
-              :color="AppColor.Indego"
+              :color="AppColor.Indigo"
             >
               <IconPencil />
             </AppButton>

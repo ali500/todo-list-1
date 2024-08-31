@@ -1,10 +1,7 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { TodoOption, type Todolist } from '@/type'
 
-interface Todolist {
-  id: number
-  isComplete: boolean
-  text: string
-}
+const todoOption = ref<TodoOption>(TodoOption.All)
 
 // فهرست برنامه‌ها
 const todolists = ref<Todolist[]>([
@@ -58,5 +55,27 @@ export const useTodolist = () => {
     }
   }
 
-  return { todolists, addTodo, toggleTodoComplete, editTodo, removeTodo }
+  const unCompletedTodo = computed<Todolist[]>(() =>
+    todolists.value.filter((todo: Todolist) => todo.isComplete === false)
+  )
+
+  const CompletedTodo = computed<Todolist[]>(() =>
+    todolists.value.filter((todo: Todolist) => todo.isComplete === true)
+  )
+
+  const setTodoOption = (option: TodoOption): void => {
+    todoOption.value = option
+  }
+
+  return {
+    todolists,
+    addTodo,
+    toggleTodoComplete,
+    editTodo,
+    removeTodo,
+    unCompletedTodo,
+    CompletedTodo,
+    todoOption,
+    setTodoOption,
+  }
 }

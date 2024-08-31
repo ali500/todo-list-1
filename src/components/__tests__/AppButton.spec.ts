@@ -12,7 +12,7 @@ describe('AppButton', () => {
   })
 
   test('color', () => {
-    const wrapper = mount(AppButton, { props: { color: AppColor.Indego } })
+    const wrapper = mount(AppButton, { props: { color: AppColor.Indigo } })
     expect(wrapper.html()).toContain('indigo')
   })
 

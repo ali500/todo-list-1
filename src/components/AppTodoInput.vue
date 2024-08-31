@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppButton from './AppButton.vue'
+import AppDropdown from './AppDropdown.vue'
 
 interface IProps {
   type?: string
@@ -14,7 +15,7 @@ withDefaults(defineProps<IProps>(), {
 
 <template>
   <div
-    class="flex gap-2 p-2 max-w-96 rounded shadow bg-white ring-indigo-200 focus-within:ring-2"
+    class="flex relative gap-2 p-2 max-w-96 rounded shadow bg-white ring-indigo-200 focus-within:ring-2"
   >
     <input
       v-model="model"
@@ -22,6 +23,6 @@ withDefaults(defineProps<IProps>(), {
       class="grow outline-none py-2 px-2 bg-transparent"
       placeholder="جستجو"
     />
-    <AppButton class="px-8">فیلتر</AppButton>
+    <AppDropdown />
   </div>
 </template>

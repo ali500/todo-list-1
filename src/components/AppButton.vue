@@ -8,13 +8,13 @@ interface IProps {
 }
 
 const props = withDefaults(defineProps<IProps>(), {
-  color: AppColor.Indego,
+  color: AppColor.Indigo,
   shape: 'rectangle',
 })
 const colorClass = ref<string>('')
 const shapeClass = ref<string>('')
 
-if (props.color == AppColor.Indego) {
+if (props.color == AppColor.Indigo) {
   colorClass.value =
     'inline-flex justify-center border border-transparent bg-indigo-100 text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2'
 } else if (props.color == AppColor.Rose) {
