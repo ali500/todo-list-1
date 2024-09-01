@@ -20,7 +20,7 @@ export const useTodolist = () => {
     })
   }
 
-  // تعویض حالت کامل شدن یک برنامه
+  // تعویض حالت انجام شدن یک برنامه
   const toggleTodoComplete = (todoId: number): void => {
     const newTodos = todolists.value.map((todo: Todolist) =>
       todo.id === todoId ? { ...todo, isComplete: !todo.isComplete } : todo
@@ -38,21 +38,17 @@ export const useTodolist = () => {
 
   // حذف از فهرست برنامه‌ها
   const removeTodo = (todoId: number): void => {
-    const result: boolean = confirm('آیا می‌خواهید این آیتم را پاک کنید؟')
+    const index: number = todolists.value.findIndex(
+      (todo: Todolist) => todo.id === todoId
+    )
 
-    if (result) {
-      const index: number = todolists.value.findIndex(
-        (todo: Todolist) => todo.id === todoId
-      )
+    todolists.value.splice(index, 1)
 
-      todolists.value.splice(index, 1)
+    const newTodolists = todolists.value.map((todo, index) => {
+      return { ...todo, id: index }
+    })
 
-      const newTodolists = todolists.value.map((todo, index) => {
-        return { ...todo, id: index }
-      })
-
-      todolists.value = newTodolists
-    }
+    todolists.value = newTodolists
   }
 
   const unCompletedTodo = computed<Todolist[]>(() =>

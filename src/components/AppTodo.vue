@@ -2,13 +2,13 @@
 import { ref, watch } from 'vue'
 import AppTodoInput from './AppTodoInput.vue'
 import { useTodolist } from '@/composables/useTodolist'
-// import type { Todolist } from '@/type'
 import AppButton from './AppButton.vue'
 
 import { AppColor, TodoOption } from '@/type'
 import AppModal from './AppModal.vue'
 import IconPencil from './icons/IconPencil.vue'
 import IconTrash from './icons/IconTrash.vue'
+import AppConfirm from './AppConfirm.vue'
 
 const {
   todolists,
@@ -21,11 +21,14 @@ const {
   todoOption,
   todoSearch,
 } = useTodolist()
+
 const isEditable = ref<boolean>(false)
 const isOpen = ref<boolean>(false)
+const isOpenDeleteDialog = ref<boolean>(false)
 const task = ref<string>('')
 const filter = ref<string>('')
 const editTaskId = ref<number>(-1)
+const deleteTaskId = ref<number>(-1)
 
 const list = ref(todolists.value)
 
@@ -59,16 +62,29 @@ watch(todoOption, () => {
 function closeModal(): void {
   isOpen.value = false
 }
+
+function openConfirm(todoId: number): void {
+  isOpenDeleteDialog.value = true
+  deleteTaskId.value = todoId
+}
+
+function closeConfirm(): void {
+  isOpenDeleteDialog.value = false
+  deleteTaskId.value = -1
+}
+
 function openModal(isEdit: boolean, todoId: number = -1): void {
   editTaskId.value = todoId
   isEditable.value = isEdit
   isOpen.value = true
 }
+
 function addTask(): void {
   addTodo(task.value)
   closeModal()
   task.value = ''
 }
+
 function editTask(todoId: number, text: string): void {
   editTodo(todoId, text)
   closeModal()
@@ -105,7 +121,7 @@ function editTask(todoId: number, text: string): void {
               <IconPencil />
             </AppButton>
             <AppButton
-              @click.stop="removeTodo(todo.id)"
+              @click.stop="openConfirm(todo.id)"
               shape="circle"
               :color="AppColor.Rose"
             >
@@ -134,6 +150,12 @@ function editTask(todoId: number, text: string): void {
         <template v-if="isEditable === false" #action>افزودن</template>
         <template v-else-if="isEditable === true" #action>ویرایش</template>
       </AppModal>
+      <AppConfirm
+        @close="closeConfirm"
+        @on-delete-todo="removeTodo"
+        :is-open="isOpenDeleteDialog"
+        :todo-id="deleteTaskId"
+      />
     </div>
   </div>
 </template>
