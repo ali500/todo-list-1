@@ -76,8 +76,12 @@ function deleteTodo() {
               </div>
 
               <div class="mt-4 space-x-2 space-x-reverse">
-                <AppButton @click="closeModal">لغو</AppButton>
-                <AppButton @click="deleteTodo" :color="AppColor.Rose">
+                <AppButton class="min-w-24" @click="closeModal">لغو</AppButton>
+                <AppButton
+                  class="min-w-24"
+                  @click="deleteTodo"
+                  :color="AppColor.Rose"
+                >
                   حذف کنید
                 </AppButton>
               </div>
